@@ -1,0 +1,51 @@
+******************************
+***   IDEs and Plug-ins
+******************************
+
+1. Install the Arduino IDE.
+     Link:  http://arduino.cc/en/Main/Software
+     Verify the USB drivers are installed and can access the Arduino Uno board;
+     make note of the virtual COM port allocated to the driver--probably COM5 or COM6.
+     
+2. Install Eclipse (Kepler) in whatever combination results in both Java and C/C++ capabilities.
+     Link:  http://eclipse.org/downloads/
+     Recommended:  Install "Eclipse IDE for Java EE Developers", then
+                   add the "Eclipse CDT (C/C++ Development Tooling) 8.2.1 Kepler"
+                       plugin from Help > Eclipse Marketplace.
+     
+3. Install from the Eclipse Marketplace the plugin:  Arduino Eclipse IDE V2
+   Configure it in Window > Preferences > Arduino [Arduino IDE Path] to point
+   to the installation path of the Arduino IDE installed in  Step #1 above.
+
+******************************
+***   7-Zip
+******************************
+1. Install 7-Zip archive manager if you'll be building and modifying Arduino libraries
+   such as TurtleBot.
+     Link:  http://www.7-zip.org/
+     
+2. Insure the SYSTEM environment variable PATH contains the path to 7-Zip, so Eclipse
+   builds can access the 7z.exe executable.
+   
+******************************   
+***   Project Details  
+******************************
+
+Arduino Library Building   
+1. Add the following post-build command in
+   [Project] > Properties > C/C++ Build > Settings | Build Steps > Post-build steps (one line):
+   
+   cmd '/c cd .. && del TurtleBot.zip & 7z a -x@zipExcludes.list TurtleBot.zip *.cpp *.h keywords.txt examples'
+   
+2. Make note of the linked folders under the "arduino" folder for:
+     core      : ArduinoPlatformPath\cores\arduino
+     variant   : ArduinoPinPath\standard
+     Others as needed:
+       Servo   : ArduinoLibPath\Servo\src   
+   
+   Add includes for them:
+     "${workspace_loc:/${ProjName}/arduino/core}"
+     "${workspace_loc:/${ProjName}/arduino/variant}"
+     "${workspace_loc:/${ProjName}/arduino/Servo}"
+
+   NOTE:  If anything will cause a fault in the compile, it's these paths.
