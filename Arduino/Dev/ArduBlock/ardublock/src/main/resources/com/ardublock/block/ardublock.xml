@@ -38,7 +38,7 @@
 				</BlockConnector>
 			</BlockConnectors>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/forward.png</FileLocation>
 				</Image>
 			</Images>
@@ -48,7 +48,7 @@
 				<text>Turns TurtleBot left by 90 degrees</text>
 			</description>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/turn_left.png</FileLocation>
 				</Image>
 			</Images>
@@ -63,7 +63,7 @@
 				</BlockConnector>
 			</BlockConnectors>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/turn_left_by.png</FileLocation>
 				</Image>
 			</Images>
@@ -73,7 +73,7 @@
 				<text>Turns TurtleBot right by 90 degrees</text>
 			</description>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/turn_right.png</FileLocation>
 				</Image>
 			</Images>
@@ -88,7 +88,7 @@
 				</BlockConnector>
 			</BlockConnectors>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/turn_right_by.png</FileLocation>
 				</Image>
 			</Images>
@@ -98,7 +98,7 @@
 				<text>Spins TurtleBot left by 90 degrees</text>
 			</description>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/spin_left.png</FileLocation>
 				</Image>
 			</Images>
@@ -113,7 +113,7 @@
 				</BlockConnector>
 			</BlockConnectors>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/spin_left_by.png</FileLocation>
 				</Image>
 			</Images>
@@ -123,7 +123,7 @@
 				<text>Spins TurtleBot right by 90 degrees</text>
 			</description>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/spin_right.png</FileLocation>
 				</Image>
 			</Images>
@@ -138,7 +138,7 @@
 				</BlockConnector>
 			</BlockConnectors>
 			<Images>
-				<Image>
+				<Image block-location="west" wrap-text="yes">
 					<FileLocation>com/ardublock/block/turtlebot/spin_right_by.png</FileLocation>
 				</Image>
 			</Images>
