@@ -43,6 +43,21 @@
 				</Image>
 			</Images>
 		</BlockGenus>
+		<BlockGenus name="turtlebot_backward" kind="command" color="0 0 160" initlabel="bg.turtlebot_backward" label-unique="no">
+			<description>
+				<text>Moves the TurtleBot backward</text>
+			</description>
+			<BlockConnectors>
+				<BlockConnector connector-type="number" connector-kind="socket" label="bc.rotations">
+					<DefaultArg genus-name="number" label="1" />
+				</BlockConnector>
+			</BlockConnectors>
+			<Images>
+				<Image block-location="west" wrap-text="yes">
+					<FileLocation>com/ardublock/block/turtlebot/backward.png</FileLocation>
+				</Image>
+			</Images>
+		</BlockGenus>
 		<BlockGenus name="turtlebot_turn_left" kind="command" color="0 0 160" initlabel="bg.turtlebot_turn_left" label-unique="no">
 			<description>
 				<text>Turns TurtleBot left by 90 degrees</text>
@@ -4954,6 +4969,7 @@
 		<BlockDrawerSet name="factory" type="stack" location="southwest" window-per-drawer="no" drawer-draggable="no">
 			<BlockDrawer name="bd.turtlebot" type="factory" is-open="yes" button-color="0 0 160">
 				<BlockGenusMember>turtlebot_forward</BlockGenusMember>
+				<BlockGenusMember>turtlebot_backward</BlockGenusMember>
 				<Separator />
 				<BlockGenusMember>turtlebot_turn_left</BlockGenusMember>
 				<BlockGenusMember>turtlebot_turn_right</BlockGenusMember>

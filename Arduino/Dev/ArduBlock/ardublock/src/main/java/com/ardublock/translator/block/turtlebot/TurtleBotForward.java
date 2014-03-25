@@ -1,38 +1,16 @@
 package com.ardublock.translator.block.turtlebot;
 
 import com.ardublock.translator.Translator;
-import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
-public class TurtleBotForward extends TranslatorBlock {
+public class TurtleBotForward extends TurtleBotBlock {
+
+	protected final static String MOTION = "forward";
 
 	public TurtleBotForward(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label)
 	{
-		super(blockId, translator, codePrefix, codeSuffix, label);
-		translator.addHeaderFile("TurtleBot.h");
-		translator.addHeaderFile("Servo.h");
+		super(blockId, translator, codePrefix, codeSuffix, label, MOTION);
 	}
 
-	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
-	{
-		String ret;
-		String rotations;
-
-		translator.addDefinitionCommand("TurtleBot turtleBot;\n");  //...singleton
-		
-		TranslatorBlock rotationsBlock = this.getRequiredTranslatorBlockAtSocket(0);
-		rotations = rotationsBlock.toCode();
-		
-		ret = "turtleBot.forward(";
-		ret += rotations;
-		ret += ");\n";
-		
-		return ret;
-	}
-	
-	
 ///////////////// ORIGINAL REFACTORED CODE
 //	@Override
 //	public String toCode() throws SocketNullException, SubroutineNotDeclaredException

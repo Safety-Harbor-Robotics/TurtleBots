@@ -4,18 +4,18 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.exception.SocketNullException;
 import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
-public class TurtleBotTurnRight extends TurtleBotTurnRightBy {
+public class TurtleBotTurnRight extends TurtleBotBlock {
+
+	protected static final String MOTION = "turnRight";
 
 	public TurtleBotTurnRight(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label)
 	{
-		super(blockId, translator, codePrefix, codeSuffix, label);
-		translator.addHeaderFile("TurtleBot.h");
-		translator.addHeaderFile("Servo.h");
+		super(blockId, translator, codePrefix, codeSuffix, label, MOTION);
 	}
 
 	@Override
 	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
 	{
-		return rotate("90");
+		return motion("90");
 	}
 }
