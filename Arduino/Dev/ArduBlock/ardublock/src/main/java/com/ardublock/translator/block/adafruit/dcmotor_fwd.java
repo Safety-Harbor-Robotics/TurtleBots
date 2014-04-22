@@ -4,8 +4,8 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
 import com.ardublock.translator.block.exception.BlockException;
 //import com.ardublock.translator.block.exception.BlockException;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
+
+;
 	
 public class dcmotor_fwd extends TranslatorBlock
 {
@@ -15,7 +15,7 @@ public class dcmotor_fwd extends TranslatorBlock
 		super(blockId, translator, codePrefix, codeSuffix, label);
 	}
 
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 				
 		TranslatorBlock ChannelBlock = this.getRequiredTranslatorBlockAtSocket(0);
@@ -26,12 +26,12 @@ public class dcmotor_fwd extends TranslatorBlock
 		
 		if (Integer.parseInt(ChannelNumber) > 4 ) 
 		{
-			throw new BlockException(this.blockId, "the Channel# of DC Motor must be 1,2,3 or 4");
+			throw new BlockException(this.getBlockId(), "the Channel# of DC Motor must be 1,2,3 or 4");
 			//ChannelNumber = "4";
 		}
 		if (Integer.parseInt(Speed) > 255 ) 
 		{
-			throw new BlockException(this.blockId, "the Speed of DC Motor must be 0(stop) to 255(full speed)");
+			throw new BlockException(this.getBlockId(), "the Speed of DC Motor must be 0(stop) to 255(full speed)");
 			//Speed = "255";
 		}
 		

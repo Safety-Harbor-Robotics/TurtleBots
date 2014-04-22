@@ -2,8 +2,6 @@ package com.ardublock.translator.block.dfrobot;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class SharpGP2Y0A21 extends TranslatorBlock {
 	
@@ -12,7 +10,7 @@ public class SharpGP2Y0A21 extends TranslatorBlock {
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException {
+	public String toCode() throws Exception {
 		String func = "int ComputeSharpGP2Y0A21(int value) {\n";
 		func +=  "if (value < 10) value = 10;\n";
 	    func += "return ((67870.0 / (value - 3.0)) - 40.0);\n";

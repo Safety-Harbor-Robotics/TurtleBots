@@ -12,9 +12,7 @@ import com.ardublock.translator.adaptor.BlockAdaptor;
 import com.ardublock.translator.adaptor.OpenBlocksAdaptor;
 import com.ardublock.translator.block.TranslatorBlock;
 import com.ardublock.translator.block.TranslatorBlockFactory;
-import com.ardublock.translator.block.exception.SocketNullException;
 import com.ardublock.translator.block.exception.SubroutineNameDuplicatedException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 import edu.mit.blocks.codeblocks.Block;
 import edu.mit.blocks.renderable.RenderableBlock;
@@ -34,12 +32,15 @@ public class Translator
 	private Set<String> inputPinSet;
 	private Set<String> outputPinSet;
 	
+	private int variableCnt;
 	private Map<String, String> numberVariableSet;
 	private Map<String, String> booleanVariableSet;
+	private Map<String, String> parameterVariableSet;
 	
 	private Workspace workspace;
+
+	private String enteredSubroutine = null;
 	
-	private int variableCnt;
 	
 	public Translator(Workspace ws)
 	{
@@ -107,14 +108,30 @@ public class Translator
 		return headerCommand.toString();
 	}
 	
-	public String translate(Long blockId) throws SocketNullException, SubroutineNotDeclaredException
+	public String translate(Long blockId) throws Exception
 	{
 		TranslatorBlockFactory translatorBlockFactory = new TranslatorBlockFactory();
 		Block block = workspace.getEnv().getBlock(blockId);
 		TranslatorBlock rootTranslatorBlock = translatorBlockFactory.buildTranslatorBlock(this, blockId, block.getGenusName(), "", "", block.getBlockLabel());
+		resetSubroutineEntry();
 		return rootTranslatorBlock.toCode();
 	}
-	
+
+	private void resetSubroutineEntry () {
+		enteredSubroutine = null;
+	}
+	public void enterSubroutine (final String subroutineName) {
+		enteredSubroutine = subroutineName;
+	}
+
+	public void exitSubroutine() {
+		resetSubroutineEntry();
+	}
+
+	public boolean isInSubroutine() {
+		return enteredSubroutine != null; 
+	}
+
 	public BlockAdaptor getBlockAdaptor()
 	{
 		return blockAdaptor;
@@ -132,9 +149,11 @@ public class Translator
 		
 		numberVariableSet = new HashMap<String, String>();
 		booleanVariableSet = new HashMap<String, String>();
+		parameterVariableSet = new HashMap<String, String>();
 		
 		blockAdaptor = buildOpenBlocksAdaptor();
-		
+		resetSubroutineEntry();
+
 		variableCnt = 0;
 	}
 	
@@ -188,6 +207,12 @@ public class Translator
 	{
 		return booleanVariableSet.get(userVarName);
 	}
+
+	public String getParamVariable(String paramName) {
+		return parameterVariableSet.get(buildParameterName(paramName));
+	}
+
+	
 	
 	public void addNumberVariable(String userVarName, String internalName)
 	{
@@ -198,6 +223,12 @@ public class Translator
 	{
 		booleanVariableSet.put(userVarName, internalName);
 	}
+	
+	public void addParameterVariable(String qualifiedName, String paramName)
+	{
+		parameterVariableSet.put(qualifiedName, paramName);
+	}
+	
 	
 	public void addFunctionName(Long blockId, String functionName) throws SubroutineNameDuplicatedException
 	{
@@ -235,6 +266,25 @@ public class Translator
 		}
 		return varName;
 	}
+
+	public String buildParameterName(String reference)
+	{
+		StringBuffer varName = new StringBuffer(32);
+		
+		for (int i = 0; i < reference.length(); ++i)
+		{
+			char c = reference.charAt(i);
+			if (Character.isLetterOrDigit(c) || (c == '_'))
+			{
+				varName.append(c);
+			}
+			else
+				varName.append("_");
+		}
+		
+		return enteredSubroutine + "." + varName.toString();
+	}
+	
 	
 	public Workspace getWorkspace() {
 		return workspace;
@@ -309,7 +359,7 @@ public class Translator
 			
 			if (!block.hasPlug() && (Block.NULL.equals(block.getBeforeBlockID())))
 			{
-				if (block.getGenusName().equals("subroutine"))
+				if (block.getGenusName().startsWith("subroutine"))
 				{
 					String functionName = block.getBlockLabel().trim();
 					this.addFunctionName(block.getBlockID(), functionName);
@@ -322,7 +372,7 @@ public class Translator
 		return subroutineBlockSet;
 	}
 	
-	public String translate(Set<RenderableBlock> loopBlocks, Set<RenderableBlock> subroutineBlocks) throws SocketNullException, SubroutineNotDeclaredException
+	public String translate(Set<RenderableBlock> loopBlocks, Set<RenderableBlock> subroutineBlocks) throws Exception
 	{
 		StringBuilder code = new StringBuilder();
 		for (RenderableBlock renderableBlock : loopBlocks)

@@ -39,9 +39,6 @@ import edu.mit.blocks.workspace.Workspace;
 
 public class OpenblocksFrame extends JFrame
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2841155965906223806L;
 
 	private Context context;
@@ -50,11 +47,13 @@ public class OpenblocksFrame extends JFrame
 	
 	private ResourceBundle uiMessageBundle;
 	
+	// ////////////////////////////////////////////////////////////
 	public void addListener(OpenblocksFrameListener ofl)
 	{
 		context.registerOpenblocksFrameListener(ofl);
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public String makeFrameTitle()
 	{
 		String title = Context.APP_NAME + " " + context.getSaveFileName();
@@ -66,6 +65,7 @@ public class OpenblocksFrame extends JFrame
 		
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public OpenblocksFrame()
 	{
 		context = Context.getContext();
@@ -86,10 +86,19 @@ public class OpenblocksFrame extends JFrame
 		initOpenBlocks();
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private void initOpenBlocks()
 	{
 		final Context context = Context.getContext();
+		final Workspace workspace = createWorkspace(context);
 		
+		this.add(createTopButtons(context), BorderLayout.NORTH);
+		this.add(createBottomButtons(workspace), BorderLayout.SOUTH);
+		this.add(workspace, BorderLayout.CENTER);
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private Workspace createWorkspace(final Context context) {
 		/*
 		WorkspaceController workspaceController = context.getWorkspaceController();
 		JComponent workspaceComponent = workspaceController.getWorkspacePanel();
@@ -97,27 +106,50 @@ public class OpenblocksFrame extends JFrame
 		
 		final Workspace workspace = context.getWorkspace();
 		
-		// WTF I can't add worksapcelistener by workspace contrller
+		// WTF I can't add workSpaceListener by workspace controller
 		workspace.addWorkspaceListener(new ArdublockWorkspaceListener(this));
+		return workspace;
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JPanel createBottomButtons(final Workspace workspace) {
+		JPanel bottomButtonBar = new JPanel();
 		
-		JPanel buttons = new JPanel();
-		buttons.setLayout(new FlowLayout());
-		JButton newButton = new JButton(uiMessageBundle.getString("ardublock.ui.new"));
-		newButton.addActionListener(new NewButtonListener(this));
-		JButton saveButton = new JButton(uiMessageBundle.getString("ardublock.ui.save"));
-		saveButton.addActionListener(new SaveButtonListener(this));
-		JButton saveAsButton = new JButton(uiMessageBundle.getString("ardublock.ui.saveAs"));
-		saveAsButton.addActionListener(new SaveAsButtonListener(this));
-		JButton openButton = new JButton(uiMessageBundle.getString("ardublock.ui.load"));
-		openButton.addActionListener(new OpenButtonListener(this));
-		JButton generateButton = new JButton(uiMessageBundle.getString("ardublock.ui.upload"));
-		generateButton.addActionListener(new GenerateCodeButtonListener(this, context));
-		JButton serialMonitorButton = new JButton(uiMessageBundle.getString("ardublock.ui.serialMonitor"));
-		serialMonitorButton.addActionListener(new ActionListener () {
+		bottomButtonBar.add(createButtonSaveImage(workspace));
+		bottomButtonBar.add(createButtonBrowseWebsite());
+		bottomButtonBar.add(createLabelVersion());
+		
+		return bottomButtonBar;
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JLabel createLabelVersion() {
+		return new JLabel("v " + uiMessageBundle.getString("ardublock.ui.version"));
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonBrowseWebsite() {
+		JButton websiteButton = new JButton(uiMessageBundle.getString("ardublock.ui.website"));
+		websiteButton.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-				context.getEditor().handleSerial();
+			    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+			    URL url;
+			    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+			        try {
+						url = new URL("http://ardublock.com");
+			            desktop.browse(url.toURI());
+			        } catch (Exception e1) {
+			            e1.printStackTrace();
+			        }
+			    }
 			}
 		});
+		
+		return websiteButton;
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonSaveImage(final Workspace workspace) {
 		JButton saveImageButton = new JButton(uiMessageBundle.getString("ardublock.ui.saveImage"));
 		saveImageButton.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
@@ -141,42 +173,72 @@ public class OpenblocksFrame extends JFrame
 				}
 			}
 		});
+		
+		return saveImageButton;
+	}
 
-		buttons.add(newButton);
-		buttons.add(saveButton);
-		buttons.add(saveAsButton);
-		buttons.add(openButton);
-		buttons.add(generateButton);
-		buttons.add(serialMonitorButton);
+	// ////////////////////////////////////////////////////////////
+	private JPanel createTopButtons(final Context context) {
+		JPanel topButtonBar = new JPanel();
+		topButtonBar.setLayout(new FlowLayout());
+		
+		topButtonBar.add(createButtonNew());
+		topButtonBar.add(createButtonSave());
+		topButtonBar.add(createButtonSaveAs());
+		topButtonBar.add(createButtonOpen());
+		topButtonBar.add(createButtonGenerate(context));
+		topButtonBar.add(createButtonSerialMonitor(context));
+		
+		return topButtonBar;
+	}
 
-		JPanel bottomPanel = new JPanel();
-		JButton websiteButton = new JButton(uiMessageBundle.getString("ardublock.ui.website"));
-		websiteButton.addActionListener(new ActionListener () {
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonSerialMonitor(final Context context) {
+		JButton serialMonitorButton = new JButton(uiMessageBundle.getString("ardublock.ui.serialMonitor"));
+		serialMonitorButton.addActionListener(new ActionListener () {
 			public void actionPerformed(ActionEvent e) {
-			    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-			    URL url;
-			    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-			        try {
-						url = new URL("http://ardublock.com");
-			            desktop.browse(url.toURI());
-			        } catch (Exception e1) {
-			            e1.printStackTrace();
-			        }
-			    }
+				context.getEditor().handleSerial();
 			}
 		});
-		JLabel versionLabel = new JLabel("v " + uiMessageBundle.getString("ardublock.ui.version"));
-		
-		bottomPanel.add(saveImageButton);
-		bottomPanel.add(websiteButton);
-		bottomPanel.add(versionLabel);
+		return serialMonitorButton;
+	}
 
-		
-		this.add(buttons, BorderLayout.NORTH);
-		this.add(bottomPanel, BorderLayout.SOUTH);
-		this.add(workspace, BorderLayout.CENTER);
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonGenerate(final Context context) {
+		JButton generateButton = new JButton(uiMessageBundle.getString("ardublock.ui.upload"));
+		generateButton.addActionListener(new GenerateCodeButtonListener(this, context));
+		return generateButton;
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonOpen() {
+		JButton openButton = new JButton(uiMessageBundle.getString("ardublock.ui.load"));
+		openButton.addActionListener(new OpenButtonListener(this));
+		return openButton;
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonSaveAs() {
+		JButton saveAsButton = new JButton(uiMessageBundle.getString("ardublock.ui.saveAs"));
+		saveAsButton.addActionListener(new SaveAsButtonListener(this));
+		return saveAsButton;
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonSave() {
+		JButton saveButton = new JButton(uiMessageBundle.getString("ardublock.ui.save"));
+		saveButton.addActionListener(new SaveButtonListener(this));
+		return saveButton;
+	}
+
+	// ////////////////////////////////////////////////////////////
+	private JButton createButtonNew() {
+		JButton newButton = new JButton(uiMessageBundle.getString("ardublock.ui.new"));
+		newButton.addActionListener(new NewButtonListener(this));
+		return newButton;
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void doOpenArduBlockFile()
 	{
 		if (context.isWorkspaceChanged())
@@ -202,6 +264,7 @@ public class OpenblocksFrame extends JFrame
 		this.setTitle(makeFrameTitle());
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private void loadFile()
 	{
 		int result = fileChooser.showOpenDialog(this);
@@ -232,6 +295,7 @@ public class OpenblocksFrame extends JFrame
 		}
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void doSaveArduBlockFile()
 	{
 		if (!context.isWorkspaceChanged())
@@ -253,6 +317,7 @@ public class OpenblocksFrame extends JFrame
 	}
 
 	
+	// ////////////////////////////////////////////////////////////
 	public void doSaveAsArduBlockFile()
 	{
 		if (context.isWorkspaceEmpty())
@@ -266,6 +331,7 @@ public class OpenblocksFrame extends JFrame
 		
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private void chooseFileAndSave(String ardublockString)
 	{
 		File saveFile = letUserChooseSaveFile();
@@ -283,12 +349,14 @@ public class OpenblocksFrame extends JFrame
 		writeFileAndUpdateFrame(ardublockString, saveFile);
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private String getArduBlockString()
 	{
 		WorkspaceController workspaceController = context.getWorkspaceController();
 		return workspaceController.getSaveString();
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private void writeFileAndUpdateFrame(String ardublockString, File saveFile) 
 	{
 		try
@@ -304,6 +372,7 @@ public class OpenblocksFrame extends JFrame
 		
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private File letUserChooseSaveFile()
 	{
 		int chooseResult;
@@ -315,12 +384,14 @@ public class OpenblocksFrame extends JFrame
 		return null;
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private boolean askUserOverwriteExistedFile()
 	{
 		int optionValue = JOptionPane.showOptionDialog(this, uiMessageBundle.getString("message.content.overwrite"), uiMessageBundle.getString("message.title.question"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, JOptionPane.YES_OPTION);
 		return (optionValue == JOptionPane.YES_OPTION);
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	private void saveArduBlockToFile(String ardublockString, File saveFile) throws IOException
 	{
 		context.saveArduBlockFile(saveFile, ardublockString);
@@ -328,6 +399,7 @@ public class OpenblocksFrame extends JFrame
 		context.setSaveFilePath(saveFile.getAbsolutePath());
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void doNewArduBlockFile()
 	{
 		if (context.isWorkspaceChanged())
@@ -347,6 +419,7 @@ public class OpenblocksFrame extends JFrame
 	
 	
 	
+	// ////////////////////////////////////////////////////////////
 	private File checkFileSuffix(File saveFile)
 	{
 		String filePath = saveFile.getAbsolutePath();

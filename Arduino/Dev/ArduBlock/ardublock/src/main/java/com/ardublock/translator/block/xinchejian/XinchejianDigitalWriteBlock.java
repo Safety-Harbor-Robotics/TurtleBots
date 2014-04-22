@@ -2,8 +2,6 @@ package com.ardublock.translator.block.xinchejian;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class XinchejianDigitalWriteBlock extends TranslatorBlock
 {
@@ -14,7 +12,7 @@ public class XinchejianDigitalWriteBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		translator.addDefinitionCommand(XinchejianDigitalReadBlock.XINCHEJIAN_DIGITAL_IO_DEFINITION);
 		

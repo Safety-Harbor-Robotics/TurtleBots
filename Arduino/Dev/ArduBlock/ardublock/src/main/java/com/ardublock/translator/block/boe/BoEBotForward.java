@@ -1,19 +1,19 @@
-package com.ardublock.translator.block.turtlebot;
+package com.ardublock.translator.block.boe;
 
 import com.ardublock.translator.Translator;
 
-public class TurtleBotForward extends TurtleBotBlock {
+public class BoEBotForward extends BoEBotBlock {
 
 	protected final static String MOTION = "forward";
 
-	public TurtleBotForward(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label)
+	public BoEBotForward(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label)
 	{
 		super(blockId, translator, codePrefix, codeSuffix, label, MOTION);
 	}
 
 ///////////////// ORIGINAL REFACTORED CODE
 //	@Override
-//	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+//	public String toCode() throws Exception
 //	{
 //		String ret;
 //		String port;

@@ -1,10 +1,9 @@
 package com.ardublock.translator.block;
 
 import com.ardublock.translator.Translator;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
-public class GlueSNBlock extends TranslatorBlock
+
+public class GlueSNBlock extends GlueBlock
 {
 	public GlueSNBlock(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label)
 	{
@@ -12,7 +11,7 @@ public class GlueSNBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		String ret = "";
 		TranslatorBlock translatorBlock = this.getTranslatorBlockAtSocket(0, codePrefix, codeSuffix);
@@ -22,5 +21,4 @@ public class GlueSNBlock extends TranslatorBlock
 		}
 		return ret;
 	}
-
 }

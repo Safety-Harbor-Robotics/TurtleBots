@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.ardublock.translator.Translator;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class ProgramBlock extends TranslatorBlock
 {
@@ -20,7 +18,7 @@ public class ProgramBlock extends TranslatorBlock
 	
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 	    String ret="";
 		TranslatorBlock translatorBlock = getTranslatorBlockAtSocket(0);

@@ -39,7 +39,7 @@ import edu.mit.blocks.renderable.RenderableBlock;
  * ********************FACTORY STRUCTURE***********************
  * 
  * Let's take a look into the structure of a factory.  Factory is
- * a pallete that sits on the far left side of the workspace.
+ * a palette that sits on the far left side of the workspace.
  * It has a bunch of drawers that slides up and down.  Each
  * drawer contains a bunch of related blocks that can be dragged
  * out.
@@ -96,13 +96,13 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     private static final String DYNAMIC_NAME = "My Blocks";
     /** The string identifier of subset drawers */
     private static final String SUBSETS_NAME = "Subsets";
-    /** The high-level UI that manages the controlling of internal CWsing components */
+    /** The high-level UI that manages the controlling of internal CSwing components */
     private Navigator navigator;
-    /** The high-level UI widget that manages swicthing between different factories */
-    private JComponent factorySwicther;
-    /** the set os static drawers */
+    /** The high-level UI widget that manages switching between different factories */
+    private JComponent factorySwitcher;
+    /** the set of static drawers */
     private List<FactoryCanvas> staticCanvases;
-    /** The set of dynaic drawers */
+    /** The set of dynamic drawers */
     private List<FactoryCanvas> dynamicCanvases;
     /** The set of subset drawers */
     private List<FactoryCanvas> subsetCanvases;
@@ -110,7 +110,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     private final Workspace workspace;
 
     /**
-     * Constucts new Factorymanager
+     * Constucts new FactoryManager
      */
     public FactoryManager(Workspace workspace) {
         this.workspace = workspace;
@@ -119,9 +119,9 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
         this.navigator.addExlorer(STATIC_NAME);
         this.navigator.addExlorer(DYNAMIC_NAME);
         this.navigator.addExlorer(SUBSETS_NAME);
-        this.factorySwicther = new JPanel(new BorderLayout());
-        this.factorySwicther.add(navigator.getSwitcher());
-        this.factorySwicther.setOpaque(false);
+        this.factorySwitcher = new JPanel(new BorderLayout());
+        this.factorySwitcher.add(navigator.getSwitcher());
+        this.factorySwitcher.setOpaque(false);
         this.navigator.getJComponent().addComponentListener(this);
         this.staticCanvases = new ArrayList<FactoryCanvas>();
         this.dynamicCanvases = new ArrayList<FactoryCanvas>();
@@ -164,15 +164,15 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
             }
             this.navigator.setCanvas(this.subsetCanvases, SUBSETS_NAME);
             if (usingSys) {
-                this.factorySwicther.removeAll();
-                this.factorySwicther.add(this.navigator.getSwitcher());
+                this.factorySwitcher.removeAll();
+                this.factorySwitcher.add(this.navigator.getSwitcher());
             } else {
-                this.factorySwicther.removeAll();
-                this.factorySwicther.add(new CLabel(SUBSETS_NAME));
+                this.factorySwitcher.removeAll();
+                this.factorySwitcher.add(new CLabel(SUBSETS_NAME));
             }
             this.viewSubsetsDrawers();
         } else if (usingSys) {
-            this.factorySwicther.removeAll();
+            this.factorySwitcher.removeAll();
             final CBorderlessButton factoryButton = new CBorderlessButton(STATIC_NAME);
             final CBorderlessButton myblocksButton = new CBorderlessButton(DYNAMIC_NAME);
             ActionListener listener = new ActionListener() {
@@ -187,17 +187,17 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
             };
             factoryButton.addActionListener(listener);
             myblocksButton.addActionListener(listener);
-            this.factorySwicther.add(factoryButton, BorderLayout.WEST);
-            this.factorySwicther.add(myblocksButton, BorderLayout.EAST);
+            this.factorySwitcher.add(factoryButton, BorderLayout.WEST);
+            this.factorySwitcher.add(myblocksButton, BorderLayout.EAST);
             this.viewStaticDrawers();
         }
-        this.factorySwicther.revalidate();
-        this.factorySwicther.repaint();
+        this.factorySwitcher.revalidate();
+        this.factorySwitcher.repaint();
     }
 
     /**
      * prints an error message in red without ending the run process.
-     * For debuggin purposes
+     * For debugging purposes
      * @param m
      */
     private void printError(String m) {
@@ -222,14 +222,14 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     }
 
     /**
-     * Relayout all factories
+     * Re-layout all factories
      */
     private void relayoutFactory() {
         this.navigator.reformView();
     }
 
     /**
-     * Relayout all the drawers
+     * Re-layout all the drawers
      */
     public void relayoutBlocks() {
         for (FactoryCanvas canvas : this.staticCanvases) {
@@ -248,7 +248,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     //Drawer Methods//
     //////////////////
     /**
-     * @return the set of searchable contianers in all factories
+     * @return the set of searchable containers in all factories
      */
     public Collection<SearchableContainer> getSearchableContainers() {
         Collection<SearchableContainer> containers = new HashSet<SearchableContainer>();
@@ -311,7 +311,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     }
 
     /**
-     * Swicth view to the set of static drawers
+     * Switch view to the set of static drawers
      */
     public void viewStaticDrawers() {
         this.navigator.setView(STATIC_NAME);
@@ -330,7 +330,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     }
 
     /**
-     * may not two draers with the same name
+     * may not have two drawers with the same name
      * @param sta
      * @param dyn
      * @param name
@@ -340,7 +340,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
      * 			-if "sta" is true, then 0<=position<staticdrawers.size
      * 			-if "dyn" is true, then 0<=position<static drawers.size
      * 			-there is NO other drawers with the same name as the
-     * 			 specified name (in oth static or dynamic sets)
+     * 			 specified name (in other static or dynamic sets)
      */
     private boolean isValidDrawer(boolean sta, boolean dyn, String name, int position) {
         if (sta) {
@@ -374,8 +374,8 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
 
     /**
      * Adds a static drawer if no drawer with the specified name already exists.
-     * If one alreaedy exist, then do ntohing.  If the name is null, do nothing
-     * @param name - name os drawer, may not be null
+     * If one already exist, then do nothing.  If the name is null, do nothing
+     * @param name - name of drawer, may not be null
      * @param color
      *
      * @requires name != null &&
@@ -387,8 +387,8 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
 
     /**
      * Adds a static drawer if no drawer with the specified name already exists.
-     * If one alreaedy exist, then do ntohing.  If the name is null, do nothing
-     * @param name - name os drawer, may not be null
+     * If one already exist, then do nothing.  If the name is null, do nothing
+     * @param name - name of drawer, may not be null
      * @param color
      * @param position
      *
@@ -429,8 +429,8 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
 
     /**
      * Adds a static drawer if no drawer with the specified name already exists.
-     * If one alreaedy exist, then do ntohing.  If the name is null, do nothing
-     * @param name - name os drawer, may not be null
+     * If one already exist, then do nothing.  If the name is null, do nothing
+     * @param name - name of drawer, may not be null
      *
      * @requires name != null &&
      * 			 drawer to not already exist in BOTH static and dynamic set
@@ -440,9 +440,9 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     }
 
     /**
-     * Adds a duynamic drawer if no drawer with the specified name already exists.
-     * If one alreaedy exist, then do ntohing.  If the name is null, do nothing
-     * @param name - name os drawer, may not be null
+     * Adds a dynamic drawer if no drawer with the specified name already exists.
+     * If one already exist, then do nothing.  If the name is null, do nothing
+     * @param name - name of drawer, may not be null
      * @param position
      *
      * @requires name != null &&
@@ -522,7 +522,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
      * 		(3) name != null
      * @param name
      *
-     * @requires name != null && there exists a drawer with sepcified name
+     * @requires name != null && there exists a drawer with specified name
      */
     public void removeStaticDrawer(String name) {
         FactoryCanvas canvas = null;
@@ -590,7 +590,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
 
     /**
      * @return all blocks in all drawers.  If no blocks found, return
-     * 			an empty set.  Ifno drawers exists in either factories,
+     * 			an empty set.  If no drawers exists in either factories,
      * 			return an empty set.
      */
     public Collection<RenderableBlock> getBlocks() {
@@ -648,7 +648,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
 
     /**
      * Add blocks to drawer if drawer can be found.  Add graphically
-     * and alos throw event.  Do nothing if no drawer if specified
+     * and also throw event.  Do nothing if no drawer if specified
      * name is found.
      *
      * @param blocks
@@ -803,7 +803,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
     }
 
     public JComponent getFactorySwitcher() {
-        return this.factorySwicther;
+        return this.factorySwitcher;
     }
 
     public boolean contains(int x, int y) {
@@ -828,7 +828,7 @@ public class FactoryManager implements WorkspaceWidget, ComponentListener, Works
                 }
             }
         } else if (event.getEventType() == WorkspaceEvent.BLOCK_REMOVED) {
-            //may not be removing a null stanc eof block, so DO NOT check for it
+            //may not be removing a null instance of block, so DO NOT check for it
             Block block = workspace.getEnv().getBlock(event.getSourceBlockID());
             if (block.hasStubs()) {
                 for (Long stub : BlockStub.getStubsOfParent(event.getWorkspace(), block)) {

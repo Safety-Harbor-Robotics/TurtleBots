@@ -4,8 +4,6 @@ package com.ardublock.translator.block;
 import java.util.ResourceBundle;
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.exception.BlockException;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class SetterVariableVectorBlock extends TranslatorBlock
 {
@@ -17,11 +15,11 @@ public class SetterVariableVectorBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		TranslatorBlock name = this.getRequiredTranslatorBlockAtSocket(0);
 		if (!(name instanceof VariableFakeBlock)) {
-		      throw new BlockException(blockId, uiMessageBundle.getString("ardublock.error_msg.array_var_slot"));
+		      throw new BlockException(getBlockId(), uiMessageBundle.getString("ardublock.error_msg.array_var_slot"));
 		    }
 		TranslatorBlock position = this.getRequiredTranslatorBlockAtSocket(1);
 		TranslatorBlock value = this.getRequiredTranslatorBlockAtSocket(2);

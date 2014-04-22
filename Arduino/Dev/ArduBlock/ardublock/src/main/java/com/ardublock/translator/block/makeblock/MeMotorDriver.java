@@ -3,8 +3,6 @@ package com.ardublock.translator.block.makeblock;
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.NumberBlock;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class MeMotorDriver extends TranslatorBlock {
 
@@ -13,7 +11,7 @@ public class MeMotorDriver extends TranslatorBlock {
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException {
+	public String toCode() throws Exception {
 		translator.addHeaderFile("Makeblock.h");
 		translator.addHeaderFile("SoftwareSerial.h");
 		translator.addHeaderFile("Wire.h");

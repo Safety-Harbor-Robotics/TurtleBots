@@ -4,6 +4,7 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
 import com.ardublock.translator.block.exception.SocketNullException;
 
+
 public class PandaInputPortBlock extends TranslatorBlock
 {
 
@@ -23,7 +24,7 @@ public class PandaInputPortBlock extends TranslatorBlock
 	@Override
 	public String toCode() throws SocketNullException
 	{
-		String g_name = this.getTranslator().getBlock(blockId).getGenusName();
+		String g_name = this.getTranslator().getBlock(getBlockId()).getGenusName();
 		String port_str = g_name.substring(7);
 		int port = Integer.parseInt(port_str);
 		int pin = pinTable[port][0];

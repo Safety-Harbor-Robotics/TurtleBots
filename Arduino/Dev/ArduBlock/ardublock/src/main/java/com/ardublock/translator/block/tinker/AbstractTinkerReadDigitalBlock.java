@@ -4,8 +4,6 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.DigitalInputBlock;
 import com.ardublock.translator.block.NumberBlock;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public abstract class AbstractTinkerReadDigitalBlock extends TranslatorBlock
 {
@@ -17,7 +15,7 @@ public abstract class AbstractTinkerReadDigitalBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		TranslatorBlock translatorBlock = this.getRequiredTranslatorBlockAtSocket(0);
 		if (translatorBlock instanceof TinkerInputPortBlock)

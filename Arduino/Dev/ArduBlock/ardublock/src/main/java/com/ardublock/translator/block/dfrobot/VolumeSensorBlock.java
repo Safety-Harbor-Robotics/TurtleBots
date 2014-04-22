@@ -3,8 +3,6 @@ package com.ardublock.translator.block.dfrobot;
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.AnalogInputBlock;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class VolumeSensorBlock extends AnalogInputBlock 
 {
@@ -31,7 +29,7 @@ public class VolumeSensorBlock extends AnalogInputBlock
 			"}\n\n";
 	
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		translator.addDefinitionCommand(AB_SOUND_FUN_DEFINE);
 		String ret = "getSoundValue(";

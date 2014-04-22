@@ -1,8 +1,6 @@
 package com.ardublock.translator.block;
 
 import com.ardublock.translator.Translator;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class Message2Block extends TranslatorBlock
 {
@@ -12,7 +10,7 @@ public class Message2Block extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		//TODO take out special character
 		String ret;

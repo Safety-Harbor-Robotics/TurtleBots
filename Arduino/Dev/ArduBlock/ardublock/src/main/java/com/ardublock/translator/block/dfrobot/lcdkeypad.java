@@ -2,8 +2,6 @@ package com.ardublock.translator.block.dfrobot;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class lcdkeypad extends TranslatorBlock {
 	
@@ -13,7 +11,7 @@ public class lcdkeypad extends TranslatorBlock {
 	}
 
 	//@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		// recuperation des parametres du module, ici le message place en rang 0
 		// on ecrit donc le code A  generer

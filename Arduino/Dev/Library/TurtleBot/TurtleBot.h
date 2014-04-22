@@ -65,7 +65,8 @@ private:
 	void init();
 	void engage(const float revolutions);
 	long getMsForRevolutions (const float revolutions);
-	float getRevsForDegrees(const float degrees);
+	float getTurnRevsForDegrees(const float degrees);
+	float getSpinRevsForDegrees(const float degrees);
 
 	Servo left;
 	Servo right;

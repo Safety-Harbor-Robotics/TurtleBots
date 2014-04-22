@@ -3,8 +3,7 @@ package com.ardublock.translator.block.storage;
 //import com.ardublock.core.Context;
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
+
 
 public class EEPROMReadBlock extends TranslatorBlock
 {
@@ -14,7 +13,7 @@ public class EEPROMReadBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		setupEEPROMEnvironment(translator);
 		

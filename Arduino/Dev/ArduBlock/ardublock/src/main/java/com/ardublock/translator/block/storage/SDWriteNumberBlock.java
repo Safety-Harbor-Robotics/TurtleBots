@@ -3,8 +3,6 @@ package com.ardublock.translator.block.storage;
 import com.ardublock.core.Context;
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class SDWriteNumberBlock extends TranslatorBlock
 {
@@ -14,7 +12,7 @@ public class SDWriteNumberBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		setupSDEnvironment(translator);
 		

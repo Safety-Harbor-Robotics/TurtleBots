@@ -2,11 +2,11 @@ package com.ardublock.translator.block;
 
 import com.ardublock.translator.Translator;
 
-public class VariableDigitalBlock extends TranslatorBlock
+public class VariableDigitalBlock extends VariableBlock
 {
 	public VariableDigitalBlock(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label)
 	{
-		super(blockId, translator, codePrefix, codeSuffix, label);
+		super(blockId, translator, codePrefix, codeSuffix, label, "bool");
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class VariableDigitalBlock extends TranslatorBlock
 		{
 			internalVariableName = translator.buildVariableName(label);
 			translator.addBooleanVariable(label, internalVariableName);
-			translator.addDefinitionCommand("bool " + internalVariableName + "= false ;");
+			translator.addDefinitionCommand(dataType + " " + internalVariableName + "= false ;");
 //			translator.addSetupCommand(internalVariableName + " = false;");
 		}
 		//String ret = " ( " + internalVariableName + " ? true : false )";

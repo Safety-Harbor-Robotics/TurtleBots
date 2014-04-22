@@ -4,8 +4,6 @@ import java.util.ResourceBundle;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.exception.BlockException;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class SetterVariableDigitalBlock extends TranslatorBlock
 {
@@ -16,11 +14,11 @@ public class SetterVariableDigitalBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		TranslatorBlock tb = this.getRequiredTranslatorBlockAtSocket(0);
 		if (!(tb instanceof VariableDigitalBlock)) {
-			throw new BlockException(blockId, uiMessageBundle.getString("ardublock.error_msg.digital_var_slot"));
+			throw new BlockException(getBlockId(), uiMessageBundle.getString("ardublock.error_msg.digital_var_slot"));
 		}
 		
 		String ret = tb.toCode();

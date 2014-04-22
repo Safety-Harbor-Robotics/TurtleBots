@@ -4,8 +4,6 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.NumberBlock;
 import com.ardublock.translator.block.TranslatorBlock;
 import com.ardublock.translator.block.exception.BlockException;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public abstract class AbstractTinkerReadAnalogBlock extends TranslatorBlock
 {
@@ -17,7 +15,7 @@ public abstract class AbstractTinkerReadAnalogBlock extends TranslatorBlock
 	}
 	
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		String ret = "analogRead(";
 		TranslatorBlock translatorBlock = this.getRequiredTranslatorBlockAtSocket(0);
@@ -38,7 +36,7 @@ public abstract class AbstractTinkerReadAnalogBlock extends TranslatorBlock
 			}
 			else
 			{
-				throw new BlockException(blockId, "analog pin# must be a number");
+				throw new BlockException(getBlockId(), "analog pin# must be a number");
 			}
 		}
 	}

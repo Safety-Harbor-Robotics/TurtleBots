@@ -4,6 +4,7 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
 import com.ardublock.translator.block.exception.SocketNullException;
 
+
 public class TinkerOutputPortBlock extends TranslatorBlock
 {
 

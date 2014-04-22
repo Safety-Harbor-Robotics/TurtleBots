@@ -49,9 +49,13 @@ public class Context
 	
 	private String saveFilePath;
 	private String saveFileName;
-	
+
+	private WorkspaceController workspaceController;
+	private Workspace workspace;
+
 	//final public static String VERSION_STRING = " ";
 	
+	// ////////////////////////////////////////////////////////////
 	public static Context getContext()
 	{
 		if (singletonContext == null)
@@ -64,16 +68,17 @@ public class Context
 				}
 			}
 		}
+		
 		return singletonContext;
 	}
 	
-	private WorkspaceController workspaceController;
-	private Workspace workspace;
-	
+	// ////////////////////////////////////////////////////////////
 	private Context()
 	{
 		workspaceController = new WorkspaceController();
+		
 		resetWorkspace();
+		
 		workspace = workspaceController.getWorkspace();
 		workspaceChanged = false;
 		highlightBlockSet = new HashSet<RenderableBlock>();
@@ -85,6 +90,7 @@ public class Context
 		osType = determineOsType();
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void resetWorkspace()
 	{
 		/*
@@ -114,6 +120,7 @@ public class Context
 		workspaceEmpty = true;
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	//determine OS
 	private OsType determineOsType()
 	{
@@ -135,6 +142,7 @@ public class Context
 		return Context.OsType.UNKNOWN;
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public File getArduinoFile(String name)
 	{
 		String path = System.getProperty("user.dir");
@@ -150,36 +158,43 @@ public class Context
 		return new File(workingDir, name);
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public WorkspaceController getWorkspaceController() {
 		return workspaceController;
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public Workspace getWorkspace()
 	{
 		return workspace;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public boolean isWorkspaceChanged()
 	{
 		return workspaceChanged;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public void setWorkspaceChanged(boolean workspaceChanged) {
 		this.workspaceChanged = workspaceChanged;
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void highlightBlock(RenderableBlock block)
 	{
 		block.updateInSearchResults(true);
 		highlightBlockSet.add(block);
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void cancelHighlightBlock(RenderableBlock block)
 	{
 		block.updateInSearchResults(false);
 		highlightBlockSet.remove(block);
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void resetHightlightBlock()
 	{
 		for (RenderableBlock rb : highlightBlockSet)
@@ -189,6 +204,7 @@ public class Context
 		highlightBlockSet.clear();
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void saveArduBlockFile(File saveFile, String saveString) throws IOException
 	{
 		if (!saveFile.exists())
@@ -202,6 +218,7 @@ public class Context
 		didSave();
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void loadArduBlockFile(File savedFile) throws IOException
 	{
 		if (savedFile != null)
@@ -214,40 +231,49 @@ public class Context
 		}
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void setEditor(Editor e) {
 		editor = e;
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public Editor getEditor() {
 		return editor;
 	}
 	
 	
+	// ////////////////////////////////////////////////////////////
 	public boolean isInArduino() {
 		return isInArduino;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public void setInArduino(boolean isInArduino) {
 		this.isInArduino = isInArduino;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public String getArduinoVersionString() {
 		return arduinoVersionString;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public void setArduinoVersionString(String arduinoVersionString) {
 		this.arduinoVersionString = arduinoVersionString;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public OsType getOsType() {
 		return osType;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public void registerOpenblocksFrameListener(OpenblocksFrameListener ofl)
 	{
 		ofls.add(ofl);
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void didSave()
 	{
 		for (OpenblocksFrameListener ofl : ofls)
@@ -256,6 +282,7 @@ public class Context
 		}
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void didLoad()
 	{
 		for (OpenblocksFrameListener ofl : ofls)
@@ -264,6 +291,7 @@ public class Context
 		}
 	}
 	
+	// ////////////////////////////////////////////////////////////
 	public void didGenerate(String sourcecode)
 	{
 		for (OpenblocksFrameListener ofl : ofls)
@@ -272,26 +300,32 @@ public class Context
 		}
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public String getSaveFileName() {
 		return saveFileName;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public void setSaveFileName(String saveFileName) {
 		this.saveFileName = saveFileName;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public String getSaveFilePath() {
 		return saveFilePath;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public void setSaveFilePath(String saveFilePath) {
 		this.saveFilePath = saveFilePath;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public boolean isWorkspaceEmpty() {
 		return workspaceEmpty;
 	}
 
+	// ////////////////////////////////////////////////////////////
 	public void setWorkspaceEmpty(boolean workspaceEmpty) {
 		this.workspaceEmpty = workspaceEmpty;
 	}

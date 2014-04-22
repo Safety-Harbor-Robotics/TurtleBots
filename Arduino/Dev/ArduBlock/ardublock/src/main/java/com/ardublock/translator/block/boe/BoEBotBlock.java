@@ -1,15 +1,15 @@
-package com.ardublock.translator.block.turtlebot;
+package com.ardublock.translator.block.boe;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
-public class TurtleBotBlock extends TranslatorBlock {
+;
+
+public class BoEBotBlock extends TranslatorBlock {
 
 	private final String motionMethodName;
 	
-	public TurtleBotBlock(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label, String motion)
+	public BoEBotBlock(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label, String motion)
 	{
 		super(blockId, translator, codePrefix, codeSuffix, label);
 		translator.addHeaderFile("TurtleBot.h");
@@ -18,7 +18,7 @@ public class TurtleBotBlock extends TranslatorBlock {
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		return motion(this.getRequiredTranslatorBlockAtSocket(0).toCode());
 	}

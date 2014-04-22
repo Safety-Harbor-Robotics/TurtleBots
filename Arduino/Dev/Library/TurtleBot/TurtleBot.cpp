@@ -82,7 +82,7 @@ TurtleBot& TurtleBot::turnLeft() {	// 90 degrees
 
 TurtleBot& TurtleBot::turnLeft(const float degrees) {
 	steer(degrees < 0.0? SteerTurnRIGHT : SteerTurnLEFT);
-	engage(getRevsForDegrees(degrees));
+	engage(getTurnRevsForDegrees(degrees));
 	return *this;
 }
 
@@ -93,7 +93,7 @@ TurtleBot& TurtleBot::spinLeft() {  // 90 degrees
 
 TurtleBot& TurtleBot::spinLeft(const float degrees) {
 	steer(degrees < 0.0? SteerSpinRIGHT : SteerSpinLEFT);
-	engage(getRevsForDegrees(degrees));
+	engage(getSpinRevsForDegrees(degrees));
 	return *this;
 }
 
@@ -107,7 +107,7 @@ TurtleBot& TurtleBot::turnRight() {   // 90 degrees
  */
 TurtleBot& TurtleBot::turnRight(const float degrees) {
 	steer(degrees < 0.0? SteerTurnLEFT : SteerTurnRIGHT);
-	engage(getRevsForDegrees(degrees));
+	engage(getTurnRevsForDegrees(degrees));
 	return *this;
 }
 
@@ -121,7 +121,7 @@ TurtleBot& TurtleBot::spinRight() { // 90 degrees
 
 TurtleBot& TurtleBot::spinRight(const float degrees) {
 	steer(degrees < 0.0? SteerSpinLEFT : SteerSpinRIGHT);
-	engage(getRevsForDegrees(degrees));
+	engage(getSpinRevsForDegrees(degrees));
 	return *this;
 }
 
@@ -148,8 +148,12 @@ long TurtleBot::getMsForRevolutions(const float revolutions) {
 	return long(abs(revolutions) / revPerMs);
 }
 
-float TurtleBot::getRevsForDegrees(const float degrees) {
+float TurtleBot::getTurnRevsForDegrees(const float degrees) {
 	return (axleTrack * degrees) / (wheelDiameter * 180.0);
+}
+
+float TurtleBot::getSpinRevsForDegrees(const float degrees) {
+	return getTurnRevsForDegrees(degrees) / 2.0f; //because wheels are counter-rotating
 }
 
 void TurtleBot::engage(const float revolutions) {

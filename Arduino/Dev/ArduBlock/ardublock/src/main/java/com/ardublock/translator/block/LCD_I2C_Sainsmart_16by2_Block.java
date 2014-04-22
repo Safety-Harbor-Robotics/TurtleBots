@@ -2,8 +2,6 @@ package com.ardublock.translator.block;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class LCD_I2C_Sainsmart_16by2_Block extends TranslatorBlock {
 	
@@ -13,7 +11,7 @@ public class LCD_I2C_Sainsmart_16by2_Block extends TranslatorBlock {
 	}
 
 	//@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		
 		TranslatorBlock tb = this.getRequiredTranslatorBlockAtSocket(1);

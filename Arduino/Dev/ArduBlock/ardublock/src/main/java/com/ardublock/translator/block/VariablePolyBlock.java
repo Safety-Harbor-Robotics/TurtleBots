@@ -2,11 +2,11 @@ package com.ardublock.translator.block;
 
 import com.ardublock.translator.Translator;
 
-public class VariablePolyBlock extends TranslatorBlock
+public class VariablePolyBlock extends VariableBlock
 {
 	public VariablePolyBlock(Long blockId, Translator translator, String codePrefix, String codeSuffix, String label)
 	{
-		super(blockId, translator, codePrefix, codeSuffix, label);
+		super(blockId, translator, codePrefix, codeSuffix, label, "char");
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class VariablePolyBlock extends TranslatorBlock
 		{
 			internalVariableName = translator.buildVariableName(label);
 			translator.addNumberVariable(label, internalVariableName);
-			translator.addDefinitionCommand("char " + internalVariableName + " = \' \' ;");
+			translator.addDefinitionCommand(dataType + " " + internalVariableName + " = \' \' ;");
 //			translator.addSetupCommand(internalVariableName + " = 0;");
 		}
 		return codePrefix + internalVariableName + codeSuffix;

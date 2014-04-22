@@ -3,8 +3,6 @@ package com.ardublock.translator.block;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.exception.BlockException;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class ServoMg996rBlock extends TranslatorBlock {
 
@@ -14,7 +12,7 @@ public class ServoMg996rBlock extends TranslatorBlock {
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		TranslatorBlock tb = this.getRequiredTranslatorBlockAtSocket(0);
 
@@ -22,7 +20,7 @@ public class ServoMg996rBlock extends TranslatorBlock {
 
 		if (!( tb instanceof NumberBlock ) )
 		{
-			throw new BlockException(this.blockId, "the Pin# of Servo must be a number");
+			throw new BlockException(this.getBlockId(), "the Pin# of Servo must be a number");
 		}
 
 		String pinNumber = tb.toCode();

@@ -2,8 +2,6 @@ package com.ardublock.translator.block.insectbot;
 
 import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.TranslatorBlock;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
 
 public class InDangerBlock extends TranslatorBlock
 {
@@ -14,7 +12,7 @@ public class InDangerBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		InsectBotUtil.setupEnv(translator);
 		

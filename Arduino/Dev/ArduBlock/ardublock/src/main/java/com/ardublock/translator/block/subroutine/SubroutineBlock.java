@@ -1,8 +1,7 @@
-package com.ardublock.translator.block;
+package com.ardublock.translator.block.subroutine;
 
 import com.ardublock.translator.Translator;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
+import com.ardublock.translator.block.TranslatorBlock;
 
 public class SubroutineBlock extends TranslatorBlock
 {
@@ -13,12 +12,13 @@ public class SubroutineBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		String subroutineName = label.trim();
 		String ret;
 		ret = "void " + subroutineName + "()\n{\n";
 		TranslatorBlock translatorBlock = getTranslatorBlockAtSocket(0);
+		
 		while (translatorBlock != null)
 		{
 			ret = ret + translatorBlock.toCode();

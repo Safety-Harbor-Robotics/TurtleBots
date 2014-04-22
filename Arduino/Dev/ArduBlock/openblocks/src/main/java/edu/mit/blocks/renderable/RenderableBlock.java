@@ -67,10 +67,11 @@ import edu.mit.blocks.workspace.WorkspaceWidget;
  */
 public class RenderableBlock extends JComponent implements SearchableElement,
 		MouseListener, MouseMotionListener, ISupportMemento, CommentSource {
+	
+	// The following may be null: parent, lastDragWidget, comment
 
 	private static final long serialVersionUID = 1L;
-	// The following may be null: parent, lastdragwidget, comment
-
+	
 	/** True if in debug mode */
 	private static final boolean DEBUG = false;
 
@@ -96,7 +97,7 @@ public class RenderableBlock extends JComponent implements SearchableElement,
 	/** Parent workspace widget. May be null */
 	private WorkspaceWidget parent;
 	/**
-	 * The previous known workspacewidget this block was dragged over. May be
+	 * The previous known WorkspaceWidget this block was dragged over. May be
 	 * null
 	 */
 	private WorkspaceWidget lastDragWidget = null;

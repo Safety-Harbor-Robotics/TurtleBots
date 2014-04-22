@@ -14,7 +14,11 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.exception.BlockException;
 import com.ardublock.translator.block.exception.SocketNullException;
 import com.ardublock.translator.block.exception.SubroutineNameDuplicatedException;
+import com.ardublock.translator.block.exception.SubroutineNeedsParamBlock;
 import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
+import com.ardublock.translator.block.exception.SubroutineParamNeedsGlue;
+import com.ardublock.translator.block.exception.SubroutineParamNeedsVariable;
+import com.ardublock.translator.block.exception.SubroutineParamNotUnique;
 
 import edu.mit.blocks.codeblocks.Block;
 import edu.mit.blocks.renderable.RenderableBlock;
@@ -34,7 +38,7 @@ public class GenerateCodeButtonListener implements ActionListener
 		workspace = context.getWorkspaceController().getWorkspace();
 		uiMessageBundle = ResourceBundle.getBundle("com/ardublock/block/ardublock");
 	}
-	
+
 	public void actionPerformed(ActionEvent e)
 	{
 		boolean success;
@@ -104,53 +108,42 @@ public class GenerateCodeButtonListener implements ActionListener
 		{
 			//e1.printStackTrace();
 			success = false;
-			Long blockId = e1.getBlockId();
-			Iterable<RenderableBlock> blocks = workspace.getRenderableBlocks();
-			for (RenderableBlock renderableBlock2 : blocks)
-			{
-				Block block2 = renderableBlock2.getBlock();
-				if (block2.getBlockID().equals(blockId))
-				{
-					context.highlightBlock(renderableBlock2);
-					break;
-				}
-			}
+			highlightRenderableBlock(e1.getBlockId());
 			JOptionPane.showMessageDialog(parentFrame, uiMessageBundle.getString("ardublock.translator.exception.socketNull"), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (BlockException e2)
 		{
 			e2.printStackTrace();
 			success = false;
-			Long blockId = e2.getBlockId();
-			Iterable<RenderableBlock> blocks = workspace.getRenderableBlocks();
-			for (RenderableBlock renderableBlock2 : blocks)
-			{
-				Block block2 = renderableBlock2.getBlock();
-				if (block2.getBlockID().equals(blockId))
-				{
-					context.highlightBlock(renderableBlock2);
-					break;
-				}
-			}
+			highlightRenderableBlock(e2.getBlockId());
 			JOptionPane.showMessageDialog(parentFrame, e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (SubroutineNotDeclaredException e3)
 		{
 			//e3.printStackTrace();
 			success = false;
-			Long blockId = e3.getBlockId();
-			Iterable<RenderableBlock> blocks = workspace.getRenderableBlocks();
-			for (RenderableBlock renderableBlock3 : blocks)
-			{
-				Block block2 = renderableBlock3.getBlock();
-				if (block2.getBlockID().equals(blockId))
-				{
-					context.highlightBlock(renderableBlock3);
-					break;
-				}
-			}
+			highlightRenderableBlock(e3.getBlockId());
 			JOptionPane.showMessageDialog(parentFrame, uiMessageBundle.getString("ardublock.translator.exception.subroutineNotDeclared"), "Error", JOptionPane.ERROR_MESSAGE);
-			
+		} catch (SubroutineParamNeedsGlue ePGlue) {
+			success = false;
+			highlightRenderableBlock(ePGlue.getBlockId());
+			JOptionPane.showMessageDialog(parentFrame, uiMessageBundle.getString("ardublock.translator.exception.subrParameter"), "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (SubroutineParamNeedsVariable ePVar) {
+			success = false;
+			highlightRenderableBlock(ePVar.getBlockId());
+			JOptionPane.showMessageDialog(parentFrame, uiMessageBundle.getString("ardublock.translator.exception.subrParameterDecl"), "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (SubroutineParamNotUnique ePUnique) {
+			success = false;
+			highlightRenderableBlock(ePUnique.getBlockId());
+			JOptionPane.showMessageDialog(parentFrame, uiMessageBundle.getString("ardublock.translator.exception.subrParameterNotUnique"), "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (SubroutineNeedsParamBlock ePBlock) {
+			success = false;
+			highlightRenderableBlock(ePBlock.getBlockId());
+			JOptionPane.showMessageDialog(parentFrame, uiMessageBundle.getString("ardublock.translator.exception.subrParameterBlockNeeded"), "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			success = false;
+			JOptionPane.showMessageDialog(parentFrame, uiMessageBundle.getString("ardublock.translator.exception.subrParameter"), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if (success)
@@ -168,6 +161,19 @@ public class GenerateCodeButtonListener implements ActionListener
 				System.out.println(codeOut);
 			}		
 			context.didGenerate(codeOut);
+		}
+	}
+
+	private void highlightRenderableBlock(Long blockId) {
+		Iterable<RenderableBlock> blocks = workspace.getRenderableBlocks();
+		for (RenderableBlock renderableBlock : blocks)
+		{
+			Block block = renderableBlock.getBlock();
+			if (block.getBlockID().equals(blockId))
+			{
+				context.highlightBlock(renderableBlock);
+				break;
+			}
 		}
 	}
 }

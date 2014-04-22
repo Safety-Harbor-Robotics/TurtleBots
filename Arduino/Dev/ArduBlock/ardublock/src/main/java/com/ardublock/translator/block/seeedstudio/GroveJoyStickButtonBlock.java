@@ -4,8 +4,7 @@ import com.ardublock.translator.Translator;
 import com.ardublock.translator.block.NumberBlock;
 import com.ardublock.translator.block.TranslatorBlock;
 import com.ardublock.translator.block.exception.BlockException;
-import com.ardublock.translator.block.exception.SocketNullException;
-import com.ardublock.translator.block.exception.SubroutineNotDeclaredException;
+
 
 public class GroveJoyStickButtonBlock extends TranslatorBlock
 {
@@ -15,7 +14,7 @@ public class GroveJoyStickButtonBlock extends TranslatorBlock
 	}
 
 	@Override
-	public String toCode() throws SocketNullException, SubroutineNotDeclaredException
+	public String toCode() throws Exception
 	{
 		String ret = "analogRead(A";
 		TranslatorBlock translatorBlock = this.getRequiredTranslatorBlockAtSocket(0);
@@ -27,7 +26,7 @@ public class GroveJoyStickButtonBlock extends TranslatorBlock
 		}
 		else
 		{
-			throw new BlockException(blockId, "analog pin# must be a number");
+			throw new BlockException(getBlockId(), "analog pin# must be a number");
 		}
 	}
 }
