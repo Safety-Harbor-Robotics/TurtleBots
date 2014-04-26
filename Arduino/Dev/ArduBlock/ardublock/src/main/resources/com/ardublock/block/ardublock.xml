@@ -6067,11 +6067,9 @@
 		</BlockFamily>
 	</BlockFamilies>
 
-	<!-- <!ENTITY &RobotGroupCOLOR; '0 10 230'> -->
-
 	<BlockDrawerSets>
 		<BlockDrawerSet name="factory" type="stack" location="southwest"
-			window-per-drawer="no" drawer-draggable="no">
+			window-per-drawer="no" drawer-draggable="no" >
 			<BlockDrawer name="bd.control" type="factory" is-open="yes" 
 				button-color="&color.group.Control;">
 				<BlockGenusMember>program</BlockGenusMember>

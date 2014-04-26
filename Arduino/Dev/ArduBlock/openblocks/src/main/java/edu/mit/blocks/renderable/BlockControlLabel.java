@@ -36,7 +36,7 @@ class BlockControlLabel extends JLabel implements MouseListener {
     BlockControlLabel(Workspace workspace, long blockID) {
         this.workspace = workspace;
         this.blockID = blockID;
-        this.setFont(new Font("Courier", Font.BOLD, (int) (14)));
+        this.setFont(new Font("Courier", Font.BOLD, (int) (16)));  //14
         this.setForeground(new Color(255, 255, 255));
         this.setBorder(BorderFactory.createLineBorder(Color.gray));//show white border
         this.setOpaque(false);

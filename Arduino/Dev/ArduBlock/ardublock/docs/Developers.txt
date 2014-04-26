@@ -1,0 +1,23 @@
+******************************
+***  NOTES FOR DEVELOPERS  ***
+******************************
+
+=============================================
+===  Internationalization and Translation  ==
+=============================================
+ * Crowdin is used to maintain translations for different
+   languages:
+   http://translate.ardublock.com
+  
+translate.ardublock.com
+translate.ardublock.com Translations
+Like · Yesterday at 5:52pm
+
+Here is how the translation can be tested locally:
+
+http://blog.ardublock.com/2013/08/16/how-to-test-translations-locally/
+
+"We have been using the Crowdin‘s system to manage the translations of Ardublock.
+With our great translation volunteers, Ardublock is now available in 20 different
+languages with latest additions of Russian and Turkish. We have been getting
+questions about how to test the translation locally. ..."
