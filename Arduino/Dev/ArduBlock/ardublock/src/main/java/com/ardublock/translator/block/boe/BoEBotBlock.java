@@ -29,7 +29,7 @@ public class BoEBotBlock extends TranslatorBlock {
 		translator.addDefinitionCommand("TurtleBot turtleBot;\n");  //...singleton
 		
 		ret = "turtleBot." + motionMethodName + "(";
-		ret += argValue;
+		if (argValue != null) ret += argValue;
 		ret += ");\n";
 		
 		return ret;
